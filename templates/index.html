@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI-Powered Appointment Triage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-content">
+        <h1>AI-Powered Appointment Triage</h1>
+    </div>
+</header>
+
+<main class="main-container">
+    <div class="card">
+        <h2 class="card-title">Symptom Checker</h2>
+        {% if error_message %}
+        <p class="error-text">{{ error_message }}
+        </p>
+        {% endif %}
+        <p class="intro-text">
+            Select your symptoms from the list below. The system will classify the urgency of your
+            appointment request as <strong>emergency</strong>, <strong>urgent</strong> or
+            <strong>routine</strong>.
+        </p>
+
+        <form action="/predict" method="POST">
+            <div class="layout-grid">
+
+                <!-- LEFT: search + symptom list -->
+                <div>
+                    <div class="search-box">
+                        <label for="symptom-search">Search symptoms</label>
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text"
+                                   id="symptom-search"
+                                   placeholder="Start typing to filter (e.g. 'cough', 'fever')">
+                        </div>
+                        <div class="suggestions" id="search-suggestions">
+                            Type to filter the list. Matching symptoms will stay visible.
+                        </div>
+                    </div>
+
+                    <div class="symptom-list" id="symptom-list">
+                        {% for symptom in symptoms|sort %}
+                        <div class="symptom-item" data-name="{{ symptom }}">
+                            <input type="checkbox"
+                                   id="{{ symptom }}"
+                                   name="symptoms"
+                                   value="{{ symptom }}">
+                            <label for="{{ symptom }}">
+                                {{ symptom.replace('_', ' ').replace('-', ' ').title() }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- RIGHT: explanation / legend -->
+                <div class="right-panel">
+                    <h3>How this prototype works</h3>
+                    <p class="right-text">
+                        Your selected symptoms are converted into a structured feature vector and passed to a
+                        trained machine learning model. The model predicts a likely condition and maps it to an
+                        appointment urgency level.
+                    </p>
+
+                    <h4 class="right-subtitle">Urgency levels</h4>
+                    <div class="urgency-legend">
+                        <span class="pill pill-emergency">Emergency</span>
+                        Immediate or same‑day care recommended.<br>
+                        <span class="pill pill-urgent">Urgent</span>
+                        Needs prompt assessment but not life‑threatening.<br>
+                        <span class="pill pill-routine">Routine</span>
+                        Suitable for a standard scheduled appointment.
+                    </div>
+
+                    <p class="disclaimer">
+                        This tool is a proof‑of‑concept built with synthetic data for a university project.
+                        It does not provide real medical advice. Always seek a qualified healthcare professional.
+                    </p>
+                </div>
+            </div>
+
+            <div class="submit-area">
+                <button type="submit">Get Triage Recommendation</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+    const searchInput = document.getElementById('symptom-search');
+    const symptomList = document.getElementById('symptom-list');
+    const suggestionText = document.getElementById('search-suggestions');
+    const items = Array.from(symptomList.getElementsByClassName('symptom-item'));
+
+    searchInput.addEventListener('input', function () {
+        const query = this.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const name = item.getAttribute('data-name')
+                .toLowerCase()
+                .replace(/_/g, ' ')
+                .replace(/-/g, ' ');
+            if (!query || name.includes(query)) {
+                item.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+
+        if (!query) {
+            suggestionText.textContent = "Type to filter the list. Matching symptoms will stay visible.";
+        } else if (visibleCount === 0) {
+            suggestionText.textContent = "No symptoms match \"" + query + "\".";
+        } else {
+            suggestionText.textContent = "Showing " + visibleCount + " matching symptom(s).";
+        }
+    });
+</script>
+</body>
+</html>

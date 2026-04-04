@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Triage Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <div class="site-header-content">
+        <h1>AI-Powered Appointment Triage</h1>
+    </div>
+</header>
+
+<main class="main-container">
+    <div class="card result-card">
+        <h2 class="card-title">Triage Outcome</h2>
+
+        <section class="result-summary">
+        <div class="result-badge-wrapper">
+            {% if urgency == 'emergency' %}
+            <span class="result-badge result-badge-emergency">Emergency</span>
+            {% elif urgency == 'urgent' %}
+            <span class="result-badge result-badge-urgent">Urgent</span>
+            {% else %}
+            <span class="result-badge result-badge-routine">Routine</span>
+            {% endif %}
+        </div>
+
+        <p class="result-text">
+            Based on the symptoms you selected, the system classifies the appointment urgency as
+            <strong>{{ urgency.capitalize() }}</strong>.
+        </p>
+
+        {% if disease %}
+            <p class="result-text">
+            The most likely condition for this symptom pattern is
+            <strong>{{ disease }}</strong>.
+            </p>
+        {% endif %}
+
+        <pclass="result-note">
+            This recommendation is generated automatically by a machine learning model trained on synthetic symptom–disease data and should not be used for real medical decisions.
+        </p>
+        </section>
+
+
+        <section class="result-details">
+            <h3>Symptoms you reported</h3>
+            {% if selectedsymptoms %}
+            <ul class="symptom-chip-list">
+                {% for s in selectedsymptoms %}
+                <li class="symptom-chip">
+                    {{ s.replace('_', ' ').replace('-', ' ').title() }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="no-symptoms">No symptoms were selected.</p>
+            {% endif %}
+
+        </section>
+
+        <section class="result-actions">
+            <a href="{{ url_for('home') }}" class="btn-secondary">Check another set of symptoms</a>
+        </section>
+
+        <p class="disclaimer">
+            This tool is a proof‑of‑concept built for a university project and is not a
+            substitute for professional medical advice, diagnosis or treatment.
+        </p>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,333 @@
+/* Global layout */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+/* Header */
+.site-header {
+    background: #0b5ed7;
+    color: white;
+    padding: 20px 40px;
+}
+
+.site-header-content {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.site-subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Main card */
+.main-container {
+    max-width: 1100px;
+    margin: 30px auto 40px;
+    padding: 0 16px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px 24px 28px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.card-title {
+    margin-top: 0;
+    font-size: 20px;
+    color: #0b5ed7;
+}
+
+.intro-text {
+    margin-bottom: 18px;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+/* Grid layout */
+.layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .layout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Search box */
+.search-box {
+    margin-bottom: 16px;
+}
+
+.search-box label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 10px 12px;
+    padding-left: 34px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.suggestions {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Symptom list */
+.symptom-list {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #f9fafb;
+}
+
+.symptom-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 4px;
+    font-size: 13px;
+}
+
+.symptom-item input {
+    margin-right: 8px;
+}
+
+.symptom-item label {
+    cursor: pointer;
+}
+
+.symptom-item:nth-child(odd) {
+    background: rgba(249, 250, 251, 0.8);
+}
+
+.symptom-item.hidden {
+    display: none;
+}
+
+/* Right panel */
+.right-panel {
+    border-left: 1px solid #e5e7eb;
+    padding-left: 18px;
+}
+
+@media (max-width: 900px) {
+    .right-panel {
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+        padding-left: 0;
+        margin-top: 18px;
+        padding-top: 18px;
+    }
+}
+
+.right-panel h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.right-subtitle {
+    font-size: 13px;
+    margin-top: 14px;
+}
+
+.right-text {
+    font-size: 13px;
+    color: #4b5563;
+}
+
+/* Urgency legend */
+.pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.pill-emergency {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.pill-urgent {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pill-routine {
+    background: #ecfdf3;
+    color: #166534;
+}
+
+.urgency-legend {
+    font-size: 12px;
+    color: #4b5563;
+}
+
+/* Submit */
+.submit-area {
+    margin-top: 18px;
+    text-align: right;
+}
+
+button[type="submit"] {
+    background: #0b5ed7;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button[type="submit"]:hover {
+    background: #084298;
+}
+
+/* Disclaimer */
+.disclaimer {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* Result page */
+
+.result-card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.result-summary {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+}
+
+.result-badge-wrapper {
+    margin-bottom: 10px;
+}
+
+.result-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.result-badge-emergency {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.result-badge-urgent {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.result-badge-routine {
+    background: #ecfdf3;
+    color: #166534;
+}
+
+.result-text {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.result-note {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.result-details h3 {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.symptom-chip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.symptom-chip {
+    background: #eef2ff;
+    color: #3730a3;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.no-symptoms {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.result-actions {
+    margin-top: 18px;
+    margin-bottom: 6px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn-secondary:hover {
+    background: #f3f4f6;
+}
