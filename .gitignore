@@ -5,11 +5,6 @@ __pycache__/
 venv/
 .env
 
-# Models and large files (don't push, marker can download from your Kaggle)
-models/*.pkl
-models/*.png
-output/*.png
-output/*.csv
 
 # IDE
 .vscode/

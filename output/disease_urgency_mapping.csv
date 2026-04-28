@@ -1,0 +1,42 @@
+Disease,Urgency
+(vertigo) Paroymsal  Positional Vertigo,Routine
+AIDS,Routine
+Acne,Routine
+Alcoholic hepatitis,Emergency
+Allergy,Routine
+Arthritis,Routine
+Bronchial Asthma,Urgent
+Cervical spondylosis,Routine
+Chicken pox,Routine
+Chronic cholestasis,Urgent
+Common Cold,Routine
+Dengue,Urgent
+Diabetes ,Routine
+Dimorphic hemmorhoids(piles),Routine
+Drug Reaction,Routine
+Fungal infection,Routine
+GERD,Routine
+Gastroenteritis,Urgent
+Heart attack,Emergency
+Hepatitis B,Urgent
+Hepatitis C,Urgent
+Hepatitis D,Urgent
+Hepatitis E,Emergency
+Hypertension ,Routine
+Hyperthyroidism,Routine
+Hypoglycemia,Routine
+Hypothyroidism,Routine
+Impetigo,Routine
+Jaundice,Routine
+Malaria,Urgent
+Migraine,Urgent
+Osteoarthristis,Routine
+Paralysis (brain hemorrhage),Routine
+Peptic ulcer diseae,Emergency
+Pneumonia,Urgent
+Psoriasis,Routine
+Tuberculosis,Emergency
+Typhoid,Urgent
+Urinary tract infection,Urgent
+Varicose veins,Emergency
+hepatitis A,Urgent
