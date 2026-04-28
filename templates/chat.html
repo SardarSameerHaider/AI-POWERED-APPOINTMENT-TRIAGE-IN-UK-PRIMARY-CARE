@@ -368,6 +368,14 @@
 
                 const data = await response.json();
                 appendMessage("bot", data.reply);
+
+                // ✅ NEW: Redirect to result page when all follow-ups are answered
+                if (data.triage && !data.reply.includes("?")) {
+                    setTimeout(() => {
+                        window.location.href = "/result";
+                    }, 2000);
+                }
+
             } catch (error) {
                 appendMessage("bot", "There was an error contacting the server.");
             }
@@ -379,6 +387,8 @@
                     method: "POST"
                 });
                 chatBox.innerHTML = "";
+                // ✅ NEW: Re-show welcome message after reset
+                appendMessage("bot", "Hello! I'm your AI Triage Assistant.\n\nPlease describe your symptoms and I'll help assess the urgency of your appointment.\n\nExample: \"I have fever, cough, headache, and chest pain for 2 days.\"");
             } catch (error) {
                 appendMessage("bot", "Could not reset chat.");
             }
@@ -390,8 +400,12 @@
             }
         });
 
+        // ✅ NEW: Show welcome message on first load if chat is empty
         window.addEventListener("load", () => {
             chatBox.scrollTop = chatBox.scrollHeight;
+            if (chatBox.children.length === 0) {
+                appendMessage("bot", "Hello! I'm your AI Triage Assistant.\n\nPlease describe your symptoms and I'll help assess the urgency of your appointment.\n\nExample: \"I have fever, cough, headache, and chest pain for 2 days.\"");
+            }
         });
     </script>
 </body>

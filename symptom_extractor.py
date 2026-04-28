@@ -17,7 +17,7 @@ MAX_SYMPTOMS_PER_MESSAGE = 3
 FOLLOWUP_ONLY_TERMS = {
     "mild", "moderate", "severe",
     "worse", "better", "same",
-    "today", "yesterday",
+    "today", "yesterday", 
 }
 
 try:
@@ -57,7 +57,8 @@ def contains_duration_pattern(text):
 def is_followup_like_text(user_text):
     text = clean_text(user_text)
 
-    if contains_duration_pattern(text):
+    # Only treat as follow-up if it's a SHORT message (≤5 words) with duration
+    if contains_duration_pattern(text) and len(text.split()) <= 5:
         return True
 
     if text in FOLLOWUP_ONLY_TERMS:

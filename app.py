@@ -252,7 +252,6 @@ def generate_chatbot_reply(symptoms, negated_symptoms, top_diseases, triage_pred
     if question_type is not None:
         reply_parts.append(next_question)
 
-   
     return " ".join(reply_parts), question_type
 
 
@@ -352,6 +351,13 @@ def chat():
 
     session["last_question_type"] = new_question_type
 
+    # Save triage result to session for result.html
+    session["top_diseases"] = [
+        {"disease": clean_disease_name(d), "probability": float(p)}
+        for d, p in top_diseases
+    ]
+    session["triage"] = str(triage_pred).title()
+
     chat_history = session.get("chat_history", [])
     chat_history.append({"sender": "user", "text": user_message})
     chat_history.append({"sender": "bot", "text": bot_reply})
@@ -368,6 +374,24 @@ def chat():
         "triage": str(triage_pred).title(),
         "followup_data": followup_data
     })
+
+
+# Result page route
+@app.route("/result")
+def result():
+    top_diseases = session.get("top_diseases", [])
+    triage = session.get("triage", "routine")
+    symptoms = session.get("collected_symptoms", [])
+
+    top_disease = top_diseases[0]["disease"] if top_diseases else "Unknown"
+
+    return render_template(
+        "result.html",
+        urgency=triage.lower(),
+        disease=top_disease,
+        selectedsymptoms=[pretty_symptom_name(s) for s in symptoms],
+        top_diseases=top_diseases
+    )
 
 
 @app.route("/reset", methods=["POST"])

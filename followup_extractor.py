@@ -70,19 +70,29 @@ def extract_followup_features(text):
         duration_days = int(week_match.group(1)) * 7
     elif month_match:
         duration_days = int(month_match.group(1)) * 30
-    elif "today" in text or "since morning" in text or "since this morning" in text or "since yesterday" in text or "since last night" in text or "since last evening" in text  :
-        duration_days = 1
-    elif "few days" in text:
-        duration_days = 3
-    elif "one week" in text:
+
+    # ✅ FIX: catch "a month", "about a month", "month", "months", "a few months"
+    elif re.search(r"\b(a month|about a month|one month|a few months|few months|months|month)\b", text):
+        duration_days = 30
+
+    # ✅ FIX: catch "a week", "about a week", "week"
+    elif re.search(r"\b(a week|about a week|one week|a few weeks|few weeks)\b", text):
         duration_days = 7
-    elif "two weeks" in text:
+
+    # ✅ FIX: catch "two weeks", "a couple of weeks"
+    elif re.search(r"\b(two weeks|couple of weeks|2 weeks)\b", text):
         duration_days = 14
-    elif "long time" in text or "for a while" in text:
-        duration_days = 14
+
+    elif "today" in text or "since morning" in text or "since this morning" in text or "since yesterday" in text or "since last night" in text or "since last evening" in text:
+        duration_days = 1
+    elif "few days" in text or "a few days" in text:
+        duration_days = 3
+    elif "long time" in text or "for a while" in text or "ages" in text or "a long time" in text:
+        duration_days = 30
 
     features.update(_set_duration_features(duration_days))
 
+    # Severity
     if any(word in text for word in ["mild", "slight", "a little", "not too bad"]):
         features["severity_mild"] = 1
     elif any(word in text for word in ["moderate", "medium", "fairly bad", "quite bad"]):
@@ -90,11 +100,13 @@ def extract_followup_features(text):
     elif any(word in text for word in ["severe", "very severe", "extreme", "terrible", "really bad", "intense", "worst", "horrible", "unbearable", "can't stand"]):
         features["severity_severe"] = 1
 
+    # Onset
     if any(word in text for word in ["sudden", "suddenly", "all of a sudden", "started suddenly"]):
         features["onset_sudden"] = 1
     elif any(word in text for word in ["gradual", "gradually", "started slowly", "came on slowly"]):
         features["onset_gradual"] = 1
 
+    # Progression
     if any(word in text for word in ["getting worse", "worsening", "worse", "more severe", "increasing"]):
         features["progression_worse"] = 1
     elif any(word in text for word in ["staying the same", "same", "unchanged", "no change"]):
