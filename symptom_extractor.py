@@ -7,7 +7,7 @@ from sentence_transformers import SentenceTransformer
 MODELS_DIR = "models"
 SYMPTOM_COLUMNS_PATH = os.path.join(MODELS_DIR, "symptom_columns.pkl")
 
-NEGATION_WORDS = {"no", "not", "dont", "don't", "without", "never", "none"}
+NEGATION_WORDS = {"no", "not", "dont", "don't", "without", "never", "none", "but not", "but no", "nope", "nah", "negative", "absent", "lack of", "free of"}
 
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
 SIMILARITY_THRESHOLD = 0.58
@@ -172,7 +172,7 @@ def extract_symptoms(user_text):
         if is_followup_like_text(segment):
             continue
 
-        if segment.startswith("no ") or segment.startswith("not ") or segment.startswith("without "):
+        if segment.startswith("no ") or segment.startswith("not ") or segment.startswith("without ") or segment.startswith("never ") or segment.startswith("none ") or segment.startswith("dont ") or segment.startswith("don't ") or segment.startswith("but not ") or segment.startswith("but no "):
             continue
 
         matches = semantic_match_segment(segment, top_k=TOP_K)
